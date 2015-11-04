@@ -1,4 +1,4 @@
 # Spellchecker
 
-A simple rest service  spellchecker build with rust.
+A simple rest service  spellchecker build with python and twisted.
 
