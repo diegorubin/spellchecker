@@ -19,6 +19,9 @@ class TestSpellchecker(unittest.TestCase):
     def test_correct(self):
         self.assertEqual('abacaxi', self.spellchecker.correct('abacahi'))
 
+    def test_if_correct(self):
+        self.assertEqual('abacaxi', self.spellchecker.correct('abacaxi'))
+
     def test_candidates(self):
         self.assertEqual(set(['abacaxi']), self.spellchecker.candidates('abacahi'))
 

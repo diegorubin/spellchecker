@@ -20,6 +20,7 @@ class Spellchecker():
         return max(candidates, key=self.NWORDS.get)
 
     def __train(self, features):
+        print 'trainning spellchecker'
         model = collections.defaultdict(lambda: 1)
         for f in features:
             model[f] += 1
