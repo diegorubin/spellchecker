@@ -6,7 +6,7 @@ from os.path import join, abspath, dirname
 
 
 class Spellchecker():
-    ALPHABET = 'abcdefghijklmnopqrstuvwxyz'
+    ALPHABET = unicode('abcdefghijklmnopqrstuvwxyz')
     def __init__(self, dictionary_file):
         words = self.__get_words(dictionary_file)
         self.NWORDS = self.__train(words)
@@ -16,8 +16,32 @@ class Spellchecker():
         return candidates
 
     def correct(self, word):
+        print 'checking word %s'%(word)
         candidates = self.candidates(word)
         return max(candidates, key=self.NWORDS.get)
+
+    def verify_and_analyze_text(self, text):
+        result = {'original' : text, 'wrongs' : []}
+        for match in re.finditer('([\w\-]+)', text, re.UNICODE):
+            word = self.verify_and_analyze(match.group(1))
+            if word['wrong']:
+                word['position'] = match.start()
+                result['wrongs'].append(word)
+
+        return result
+
+    def verify_and_analyze(self, word):
+        correct = self.correct(word)
+        candidates = self.candidates(word)
+
+        response = {
+            'word' : word,
+            'suggestion': correct,
+            'wrong' : correct != word,
+            'candidates' : list(candidates)
+        }
+
+        return response
 
     def __train(self, features):
         print 'trainning spellchecker'
@@ -43,5 +67,5 @@ class Spellchecker():
     def __get_words(self, dictionary_file):
         f = abspath(join(dirname(__file__), 'words', dictionary_file))
         words = file(f).read()
-        return re.findall('[\w\-]+', words)
+        return re.findall('[\w\-]+', words, re.UNICODE)
 
