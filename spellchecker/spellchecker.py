@@ -22,7 +22,7 @@ class Spellchecker():
 
     def verify_and_analyze_text(self, text):
         result = {'original' : text, 'wrongs' : []}
-        for match in re.finditer('([\w\-]+)', text, re.UNICODE):
+        for match in re.finditer('([\w\-_]+)', text, re.UNICODE):
             word = self.verify_and_analyze(match.group(1))
             if word['wrong']:
                 word['position'] = match.start()

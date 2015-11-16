@@ -9,11 +9,11 @@ spellchecker = Spellchecker('pt_BR.wl')
 class CheckWordHandler(cyclone.web.RequestHandler):
     def get(self, word):
         self.set_header("Content-Type", "application/json")
-        self.write(spellchecker.verify_and_analyze(word))
+        self.write(spellchecker.verify_and_analyze(word.decode('utf-8')))
 
 class CheckTextHandler(cyclone.web.RequestHandler):
     def post(self):
-        text = self.request.body
+        text = self.request.body.decode('utf-8')
         self.set_header("Content-Type", "application/json")
         self.write(spellchecker.verify_and_analyze_text(text))
 
