@@ -22,11 +22,13 @@ class Spellchecker():
 
     def verify_and_analyze_text(self, text):
         result = {'original' : text, 'wrongs' : []}
-        for match in re.finditer('([\w\-_]+)', text, re.UNICODE):
-            word = self.verify_and_analyze(match.group(1))
-            if word['wrong']:
-                word['position'] = match.start()
-                result['wrongs'].append(word)
+        for number, line in enumerate(text.split("\n")):
+            for match in re.finditer('([\w\-_]+)', line, re.UNICODE):
+                word = self.verify_and_analyze(match.group(1))
+                if word['wrong']:
+                    word['line'] = number
+                    word['column'] = match.start()
+                    result['wrongs'].append(word)
 
         return result
 
@@ -59,7 +61,7 @@ class Spellchecker():
        return set(deletes + transposes + replaces + inserts)
 
     def __known_edits2(self, word):
-        return set(e2 for e1 in __edits1(word) for e2 in __edits1(e1) if e2 in self.NWORDS)
+        return set(e2 for e1 in self.__edits1(word) for e2 in self.__edits1(e1) if e2 in self.NWORDS)
 
     def __known(self, words):
         return set(w for w in words if w in self.NWORDS)
