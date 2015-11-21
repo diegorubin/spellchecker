@@ -21,10 +21,13 @@ class CheckTextHandler(cyclone.web.RequestHandler):
 class WordListHandler(cyclone.web.RequestHandler):
     def post(self):
         self.set_header("Content-Type", "application/json")
-        word = self.get_argument('word')
-        author = self.get_argument('author')
+
+        word = self.get_argument('word').decode('utf-8')
+        author = self.get_argument('author').decode('utf-8')
+
         w = Word(word, author)
-        w.save()
+        if w.save():
+            spellchecker.add(word)
 
         self.write({'word': word, 'author': author})
 

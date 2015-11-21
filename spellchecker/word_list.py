@@ -32,6 +32,7 @@ class Word():
         self.connection = RedisConnection()
 
     def save(self):
+        print 'adding %s for %s'%(self.word, self.author)
         self.connection.add_to_list('words', self.word)
         self.connection.add_to_list('author:%s'%(self.author), self.word)
         return True

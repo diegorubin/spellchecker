@@ -47,7 +47,7 @@ class Spellchecker():
         return response
 
     def add(self, word):
-        self.NWORDS[unicode(word, 'utf-8')] += 1
+        self.NWORDS[word] += 1
 
     def __train(self, features):
         print 'trainning spellchecker'
