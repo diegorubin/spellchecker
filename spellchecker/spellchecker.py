@@ -4,12 +4,12 @@ import re, collections
 import sys
 from os.path import join, abspath, dirname
 
-import pdb
+from word_list import load_list
 
 class Spellchecker():
     ALPHABET = 'abcdefghijklmnopqrstuvwxyzãâàáéêíõóôúç'.decode('utf-8')
-    def __init__(self, dictionary_file):
-        words = self.__get_words(dictionary_file)
+    def __init__(self, dictionary):
+        words = self.__get_words(dictionary)
         self.NWORDS = self.__train(words)
 
     def candidates(self, word):
@@ -46,6 +46,9 @@ class Spellchecker():
 
         return response
 
+    def add(self, word):
+        self.NWORDS[unicode(word, 'utf-8')] += 1
+
     def __train(self, features):
         print 'trainning spellchecker'
         model = collections.defaultdict(lambda: 1)
@@ -69,7 +72,5 @@ class Spellchecker():
         return set(w for w in words if w in self.NWORDS)
 
     def __get_words(self, dictionary_file):
-        f = abspath(join(dirname(__file__), 'words', dictionary_file))
-        words = file(f).read()
-        return words.split("\n")
+        return load_list()
 

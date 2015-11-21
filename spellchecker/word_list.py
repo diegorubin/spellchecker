@@ -9,10 +9,15 @@ class RedisConnection():
 
     def __load_configurations(self):
 
-        self.redis_host = os.environ.get('SPELLCHECKER_REDIS_HOST', 'localhost')
-        self.redis_port = os.environ.get('SPELLCHECKER_REDIS_PORT', '6379')
+        if hasattr(RedisConnection, 'connection'):
+            self.connection = RedisConnection.connection
+        else:
+            print 'creating a new connection with redis'
+            self.redis_host = os.environ.get('SPELLCHECKER_REDIS_HOST', 'localhost')
+            self.redis_port = os.environ.get('SPELLCHECKER_REDIS_PORT', '6379')
 
-        self.connection = redis.StrictRedis(host=self.redis_host, port=self.redis_port, db=0)
+            self.connection = redis.StrictRedis(host=self.redis_host, port=self.redis_port, db=0)
+            RedisConnection.connection = self.connection
 
     def add_to_list(self, listname, content):
         self.connection.lpush(listname,content)

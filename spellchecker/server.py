@@ -3,8 +3,9 @@
 import cyclone.web
 import re
 from spellchecker import Spellchecker
+from word_list import Word
 
-spellchecker = Spellchecker('pt_BR.list')
+spellchecker = Spellchecker('words')
 
 class CheckWordHandler(cyclone.web.RequestHandler):
     def get(self, word):
@@ -20,12 +21,19 @@ class CheckTextHandler(cyclone.web.RequestHandler):
 class WordListHandler(cyclone.web.RequestHandler):
     def post(self):
         self.set_header("Content-Type", "application/json")
+        word = self.get_argument('word')
+        author = self.get_argument('author')
+        w = Word(word, author)
+        w.save()
+
+        self.write({'word': word, 'author': author})
 
 class ApplicationServer(cyclone.web.Application):
     def __init__(self):
         handlers = [
             (r"/check/(.{1,50})", CheckWordHandler),
-            (r"/check_text", CheckTextHandler)
+            (r"/check_text", CheckTextHandler),
+            (r"/add", WordListHandler)
         ]
 
         settings = {}
