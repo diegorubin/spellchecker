@@ -4,7 +4,7 @@ CONTAINER_NAME='spellchecker-server'
 COMMAND='/app/bin/spellchecker-server'
 
 def start_container():
-    run("docker run --net=host -d --name %s diegorubin/spellchecker:v2 %s"%(CONTAINER_NAME, COMMAND))
+    run("docker run --net=host -d --name %s diegorubin/spellchecker:v3 %s"%(CONTAINER_NAME, COMMAND))
 
 def remove_container():
     run("docker rm %s || echo 'not exists'"%(CONTAINER_NAME))
