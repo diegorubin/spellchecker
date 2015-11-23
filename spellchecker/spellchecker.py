@@ -34,8 +34,13 @@ class Spellchecker():
 
     def verify_and_analyze(self, word):
         print 'checking word %s'%(word)
-        correct = self.correct(word)
-        candidates = self.candidates(word)
+
+        if word.isdigit():
+            correct = word
+            candidates = set()
+        else:
+            correct = self.correct(word)
+            candidates = self.candidates(word)
 
         response = {
             'word' : word,
