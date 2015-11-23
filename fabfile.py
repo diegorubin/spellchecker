@@ -13,7 +13,7 @@ def stop_container():
     run("docker stop %s || echo 'not running'"%(CONTAINER_NAME))
 
 def update_docker_image():
-    run("docker pull diegorubin/spellchecker:v2")
+    run("docker pull diegorubin/spellchecker:v3")
 
 def update_spellchecker():
     stop_container()
