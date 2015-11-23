@@ -22,8 +22,8 @@ class WordListHandler(cyclone.web.RequestHandler):
     def post(self):
         self.set_header("Content-Type", "application/json")
 
-        word = self.get_argument('word').decode('utf-8')
-        author = self.get_argument('author').decode('utf-8')
+        word = self.get_argument('word')
+        author = self.get_argument('author')
 
         w = Word(word, author)
         if w.save():
