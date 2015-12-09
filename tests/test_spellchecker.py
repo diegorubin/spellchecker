@@ -25,5 +25,4 @@ class TestSpellchecker(unittest.TestCase):
     def test_candidates(self):
         self.assertEqual(set(['abacaxi']), self.spellchecker.candidates('abacahi'))
 
-unittest.main()
 

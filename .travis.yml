@@ -1,0 +1,17 @@
+language: python
+
+python:
+  - "2.7"
+
+services:
+  - redis-server
+
+install:
+  - pip install -r requirements.txt
+  - pip install coveralls
+
+script: coverage tests/execution.py
+
+after_success:
+  coveralls
+

@@ -22,5 +22,3 @@ class TestWord(unittest.TestCase):
         words = word_list.load_list()
         self.assertEqual(True, 'cachorro' in words)
 
-unittest.main()
-
