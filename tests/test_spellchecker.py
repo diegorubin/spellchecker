@@ -16,8 +16,10 @@ except ImportError:
 
 class TestSpellchecker(unittest.TestCase):
     def setUp(self):
+        word = Word('abacaxi', 'SYSTEM-TEST')
+        word.save()
+
         self.spellchecker = Spellchecker('pt_BR.list')
-        word = Word('abacaxi', 'TEST')
 
     def test_correct(self):
         self.assertEqual('abacaxi', self.spellchecker.correct('abacahi'))

@@ -14,6 +14,10 @@ except ImportError:
     from spellchecker import word_list
 
 class TestWord(unittest.TestCase):
+    def setUp(self):
+        word = Word('cachorro', 'SYSTEM-TEST')
+        word.save()
+
     def test_save_word(self):
         word = Word('cachorro', 'SYSTEM-TEST')
         self.assertEqual(True, word.save())
